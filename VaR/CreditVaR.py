@@ -9,7 +9,7 @@ standard deviation of the results array.
 import numpy as np
 
 # Number of simulations
-num_sims = 10000
+num_sims = 100000
 
 # Number of loans in the portfolio
 num_loans = 100
