@@ -6,24 +6,29 @@ program.'''
 
 import pandas as pd
 import threading
+import time as t
+
+# Read the CSV file into a dataframe
+df = pd.read_csv("matrix.csv")
+
+start = t.time()
+print(start)
+
+# Split the dataframe into chunks
+chunks = [df[i:i + 100] for i in range(0, df.shape[0], 100)]
 
 
+# Define a function to process a chunk
 def process_chunk(chunk):
-    # Multiply all values in the chunk by 2
-    chunk *= 2
-    return chunk
+    processed_chunk = chunk * 2
+    # Add the processed chunk to the list
+    processed_chunks.append(processed_chunk)
 
 
-# Load the DataFrame
-df = pd.read_csv('data.csv')
+# Initialize a list to store the processed chunks
+processed_chunks = []
 
-# Divide the DataFrame into chunks
-chunks = [df[i:i + 1000] for i in range(0, df.shape[0], 1000)]
-
-# Create a list to store the results
-results = []
-
-# Create a thread for each chunk
+# Process the chunks in parallel using multithreading
 threads = []
 for chunk in chunks:
     thread = threading.Thread(target=process_chunk, args=(chunk,))
@@ -34,5 +39,25 @@ for chunk in chunks:
 for thread in threads:
     thread.join()
 
-# Concatenate the results into a single DataFrame
-df = pd.concat(results)
+# Concatenate the processed chunks back into a single dataframe
+result_df = pd.concat(processed_chunks)
+
+end = t.time()
+
+print(end - start)
+
+# # Save the resulting dataframe to a CSV file
+# result_df.to_csv("updated.csv", index=False)
+
+
+##########################################################################################
+
+
+df1 = pd.read_csv("matrix.csv")
+start = t.time()
+df1 = df1.multiply(2)
+end = t.time()
+print(end - start)
+
+
+print(help(pd))

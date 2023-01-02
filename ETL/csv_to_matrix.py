@@ -9,17 +9,15 @@ print(f'Available memory: {available_memory / (1024 ** 3)} GB')
 
 # next we see how much memory will be required to create our N x N matrix using numpy
 
-n = 15_000
+n = 5000
 matrix = np.zeros((n, n))
 size_in_bytes = matrix.nbytes
 print(f'Size of matrix: {size_in_bytes / (1024 ** 2)} MB')
 
 # now let's create the matrix
 
-matrix = np.random.randint(2, size=(n, n))
+matrix = np.random.randint(1,4, size=(n, n))
 
-matrix[7500, 7500] = 2
+print(matrix)
 
-print(matrix[7501, 7501])
-
-# np.savetxt('matrix.csv', matrix)
+np.savetxt('matrix.csv', matrix, delimiter=',')
